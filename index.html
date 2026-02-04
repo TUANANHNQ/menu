@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<title>Menu Cháo Dinh Dưỡng</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<style>
+:root{
+  --main:#0d6efd;
+  --bg:#f6f7fb;
+}
+
+body{
+  margin:0;
+  font-family:system-ui,-apple-system,BlinkMacSystemFont,sans-serif;
+  background:url("bg.jpg") center/cover fixed;
+  color:#222;
+}
+
+.overlay{
+  background:rgba(255,255,255,.92);
+  min-height:100vh;
+  padding-bottom:70px;
+}
+
+header{
+  text-align:center;
+  padding:24px 16px 12px;
+}
+
+header img{
+  max-width:120px;
+  animation:float 4s ease-in-out infinite;
+}
+
+@keyframes float{
+  0%,100%{transform:translateY(0)}
+  50%{transform:translateY(-6px)}
+}
+
+h1{margin:10px 0}
+
+.container{
+  max-width:900px;
+  margin:auto;
+  padding:0 16px;
+}
+
+.section{
+  background:#fff;
+  border-radius:18px;
+  padding:16px;
+  margin:20px 0;
+  box-shadow:0 8px 24px rgba(0,0,0,.06);
+}
+
+.menu-item{
+  display:flex;
+  justify-content:space-between;
+  padding:10px 0;
+  border-bottom:1px dashed #e0e0e0;
+  cursor:pointer;
+  transition:.2s;
+}
+.menu-item:last-child{border:none}
+.menu-item:hover{
+  background:#f9fafc;
+  transform:translateX(4px);
+}
+
+.price{font-weight:600;white-space:nowrap}
+
+.call-btn{
+  display:block;
+  background:var(--main);
+  color:#fff;
+  text-align:center;
+  padding:12px;
+  border-radius:14px;
+  text-decoration:none;
+  font-weight:600;
+  margin-top:12px;
+}
+
+/* POPUP */
+.popup{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.5);
+  align-items:center;
+  justify-content:center;
+  z-index:999;
+}
+.popup-content{
+  background:#fff;
+  border-radius:18px;
+  width:90%;
+  max-width:420px;
+  padding:16px;
+  animation:zoom .25s ease;
+}
+@keyframes zoom{
+  from{transform:scale(.9);opacity:0}
+  to{transform:scale(1);opacity:1}
+}
+.popup-content img{
+  width:100%;
+  border-radius:14px;
+  margin-bottom:10px;
+}
+.close{text-align:center;margin-top:8px}
+
+/* BOTTOM BAR */
+.action-bar{
+  position:fixed;
+  bottom:0;left:0;right:0;
+  display:flex;
+  background:#fff;
+  border-top:1px solid #ddd;
+}
+.action-bar a{
+  flex:1;
+  text-align:center;
+  padding:12px;
+  text-decoration:none;
+  font-weight:600;
+}
+.call{color:#0d6efd}
+.zalo{color:#0abf53}
+
+/* DESKTOP */
+@media(min-width:1024px){
+  .container{max-width:1100px}
+}
+</style>
+</head>
+
+<body>
+<div class="overlay">
+
+<header>
+  <img src="logo.png" alt="Logo">
+  <h1>🍲 MENU CHÁO DINH DƯỠNG</h1>
+</header>
+
+<div class="container">
+
+<!-- MENU HÔM NAY -->
+<div id="menu"></div>
+
+<!-- COMBO LINK -->
+<div class="section" style="text-align:center">
+  <h3>❄️ Combo Cháo Lạnh</h3>
+  <p style="color:#555">Cháo chế biến sẵn – tiện lợi – đa dạng món</p>
+  <a href="javascript:openCombo()" class="call-btn" style="max-width:340px;margin:auto">
+    👉 Xem chi tiết 4 Combo Cháo Lạnh
+  </a>
+</div>
+
+<!-- LIÊN HỆ -->
+<div class="section">
+  <h3>📞 Liên hệ</h3>
+  <a href="tel:0363443443" class="call-btn">📞 Gọi điện tư vấn & đặt món</a>
+</div>
+
+</div>
+</div>
+
+<!-- POPUP MÓN -->
+<div class="popup" id="popup">
+  <div class="popup-content">
+    <img id="p-img">
+    <h3 id="p-name"></h3>
+    <p id="p-desc"></p>
+    <p><strong id="p-price"></strong></p>
+    <a href="tel:0363443443" class="call-btn">📞 Gọi tư vấn món này</a>
+    <div class="close"><button onclick="closePopup()">Đóng</button></div>
+  </div>
+</div>
+
+<!-- POPUP COMBO -->
+<div class="popup" id="comboPopup">
+  <div class="popup-content">
+    <h2>❄️ Combo Cháo Lạnh</h2>
+    <img src="combo-200k.png">
+
+    <h4>🍀 Combo 1 – Ăn Ngon</h4>
+    <p>Ghẹ · Chân giò · Cá quả · Tôm · Tim · Ngao</p>
+
+    <h4>🌈 Combo 2 – Vui Vẻ</h4>
+    <p>Cua · Bò · Gà ác · Cá hồi · Sò điệp · Ếch</p>
+
+    <h4>💪 Combo 3 – Khỏe Mạnh</h4>
+    <p>Cá tầm · Thăn heo · Gà ác · Bò · Tôm · Ngao</p>
+
+    <h4>🧠 Combo 4 – Thông Minh</h4>
+    <p>Bào ngư · Sườn · Gà ta · Bề bề · Lươn · Thỏ</p>
+
+    <h4>🧊 Bảo quản & sử dụng</h4>
+    <ul>
+      <li>Ngăn mát 0–4°C</li>
+      <li>Dùng trong 1–2 ngày</li>
+      <li>Hâm nóng trước khi ăn</li>
+    </ul>
+
+    <a href="tel:0363443443" class="call-btn">📞 Gọi tư vấn Combo</a>
+    <div class="close"><button onclick="closeCombo()">Đóng</button></div>
+  </div>
+</div>
+
+<div class="action-bar">
+  <a class="call" href="tel:0363443443">📞 Gọi</a>
+  <a class="zalo" href="https://zalo.me/0363443443">💬 Zalo</a>
+</div>
+
+<script>
+const SHEET_URL = "https://docs.google.com/spreadsheets/d/1Ef7w4wHTjuiSEFwTBvC01ed1ANleYuZj4aI_6HVyHeg/edit?gid=0#gid=0";
+
+fetch(SHEET_URL).then(r=>r.text()).then(t=>{
+  const rows=t.split("\n").slice(1);
+  const groups={};
+
+  rows.forEach(r=>{
+    const c=r.split(",");
+    const homnay=c[2];        // Cột C – Hôm nay
+    const ten=c[7];           // Cột H – Tên món
+    const gia=c[8];           // Cột I – Giá
+    const s=c[9], m=c[10], l=c[11]; // Size S M L
+    const mota=c[5];          // Mô tả
+    const img=c[6];           // Ảnh
+
+    if(homnay==="TRUE"){
+      if(!groups["HÔM NAY"]) groups["HÔM NAY"]=[];
+      groups["HÔM NAY"].push({ten,s,m,l,mota,img});
+    }
+  });
+
+  const menu=document.getElementById("menu");
+  for(const g in groups){
+    let html=`<div class="section"><h3>${g}</h3>`;
+    groups[g].forEach(i=>{
+      html+=`
+      <div class="menu-item" onclick='openPopup(${JSON.stringify(i)})'>
+        <span>${i.ten}</span>
+        <span class="price">${i.s}-${i.m}-${i.l}K</span>
+      </div>`;
+    });
+    html+="</div>";
+    menu.innerHTML+=html;
+  }
+});
+
+function openPopup(i){
+  document.getElementById("p-img").src=i.img;
+  document.getElementById("p-name").innerText=i.ten;
+  document.getElementById("p-desc").innerText=i.mota;
+  document.getElementById("p-price").innerText=`Giá: ${i.s}-${i.m}-${i.l}K`;
+  document.getElementById("popup").style.display="flex";
+}
+function closePopup(){document.getElementById("popup").style.display="none";}
+function openCombo(){document.getElementById("comboPopup").style.display="flex";}
+function closeCombo(){document.getElementById("comboPopup").style.display="none";}
+</script>
+
+</body>
+</html>
